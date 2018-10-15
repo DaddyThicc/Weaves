@@ -3,7 +3,7 @@ const cryptr   = new Cryptr('BaCoNaNdEgGsArEsOgOoD');
 var express    = require('express');
 var app        = express();
 var mysql      = require('mysql');
-var port       = process.env.PORT || 5000;
+//var port       = process.env.PORT || 5000;
 var bodyParser = require('body-parser');
 var path = require('path');
 
@@ -59,6 +59,13 @@ app.post("/home", function(req, res){
 
 
 //listener for server
-app.listen(port, function() {
+/*app.listen(port, function() {
     console.log("Listening on " + port);
+});*/
+
+var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080
+var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1'
+ 
+app.listen(server_port, server_ip_address, function () {
+  console.log( "Listening on " + server_ip_address + ", port " + server_port )
 });
