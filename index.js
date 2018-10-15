@@ -1,32 +1,31 @@
-const Cryptr   = require('cryptr');
-const cryptr   = new Cryptr('BaCoNaNdEgGsArEsOgOoD');
+//const Cryptr   = require('cryptr');
+//const cryptr   = new Cryptr('BaCoNaNdEgGsArEsOgOoD');
 var express    = require('express');
 var app        = express();
-var mysql      = require('mysql');
-//var port       = process.env.PORT || 5000;
+//var mysql      = require('mysql');
 var bodyParser = require('body-parser');
-var path = require('path');
 
-var connection = mysql.createConnection({
+/*var connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
   password : '',
   database : 'Weaves'
-});
+});*/
 
 // Setup
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({	extended: true })); // support encoded bodies
-app.use(express.static(path.join(__dirname, 'public')));
-
+//app.use('/styles', express.static(__dirname + 'public/css'));
+var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080
+var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1'
 
 // sends landing page when you first load webpage
 app.get("/", function(req, res) {
-    res.sendFile('home.html' , { root : __dirname});
+    res.sendFile('home.html' , { root : __dirname+"/public"});
 });
 
 //checks login info then sends data to user and redirects to home page
-app.post("/home", function(req, res){
+/*app.post("/home", function(req, res){
     var query_string = `SELECT * FROM Users WHERE username = '${req.body.username}';`;
     console.log(req.body);
     connection.connect();
@@ -41,7 +40,7 @@ app.post("/home", function(req, res){
         }
     });
     connection.end();
-});
+});*/
 
 // registers new user
 /*app.post("/register", function(req, res) {
@@ -56,15 +55,6 @@ app.post("/home", function(req, res){
     res.send('<meta http-equiv="Refresh" content="5; url=localhost:5000/pages/login.html>');
     
 });*/
-
-
-//listener for server
-/*app.listen(port, function() {
-    console.log("Listening on " + port);
-});*/
-
-var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080
-var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1'
  
 app.listen(server_port, server_ip_address, function () {
   console.log( "Listening on " + server_ip_address + ", port " + server_port )

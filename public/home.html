@@ -1,419 +1,550 @@
 <html lang="en">
 
 <head>
-    <title>Bootstrap Example</title>
+    <title>Weaves</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <style>
-        /* Remove the navbar's default margin-bottom and rounded borders */ 
-    .navbar {
-      margin-bottom: 0;
-      border-radius: 0;
-    }
+</head>
     
-    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
-    .row.content {height: 450px}
-    
-    /* Set gray background color and 100% height */
+<style>
+  .navbar {
+    margin-bottom: 0;
+    border-radius: 0;
+}
+
+/* Set gray background color and 100% height */
+.sidenav {
+    padding-top: 20px;
+    background-color: #95a5a6;
+    height: 100%;
+}
+
+body {
+    width: 100%;
+    height: 100%;
+}
+
+/* Set black background color, white text and some padding */
+footer {
+    background-color: #555;
+    color: white;
+    padding: 15px;
+    position: fixed;
+    height: 50px;
+    bottom: 0;
+    width: 100%;
+}
+
+/* On small screens, set height to 'auto' for sidenav and grid */
+@media screen and (max-width: 767px) {
     .sidenav {
-      padding-top: 20px;
-      background-color: #f1f1f1;
-      height: 140%;
-    }
-    
-    /* Set black background color, white text and some padding */
-    footer {
-      background-color: #555;
-      color: white;
-      padding: 15px;
-      position: fixed;
-      height: 50px;
-      bottom: 0;
-      width: 100%;
-    }
-    
-    /* On small screens, set height to 'auto' for sidenav and grid */
-    @media screen and (max-width: 767px) {
-      .sidenav {
         height: auto;
         padding: 15px;
-      }
-      .row.content {height:auto;} 
-    }
-      
-    .avatar {
-        vertical-align: middle;
-        width: 130px;
-        height: 130px;
-        border-radius: 100%;
-      }
-  
-    .dialogIsOpen #page-wrap {
-
-        /* Blur and de-color */
-        -webkit-filter: blur(5px) grayscale(50%);
-
-        /* Recede */
-        -webkit-transform: scale(0.9);
-      }
-    .dialogIsOpen #modal1 {
-  
-        /* Regular size and visible */
-        transform: scale(1); /* prefix me */
-        opacity: 1;
-        
-        /* Clickable */
-        pointer-events: auto;
-
-}
-      #page-wrap, #modal1 {
-  
-  transition: all 0.4s ease; /* prefix me */
-
-}
-      
-      .search {
-          padding-top: 25px;
-          margin-left: 75px;
-          margin-right: 75px;
-          margin-bottom: 25px;
-      }
-      .bar {
-           text-align: center;
-      }
-      .list-content .list-group .title{
-          font-weight:bold;
-          height: 50px;
-      }
-      .message{
-          font-size: 10px;
-      }
-      .nameMessage{
-          font-weight: bold;
-      }
-      .list-content{
-          margin-top: 25px;
-      }
-      .list-group-item img {
-          height:50px; 
-          width:50px;
-      }
-      .list-group-item text-left{
-          padding-bottom: -25px;
-      }
-      .list-group-item text-center{
-          padding-top: 25px;
-          padding-bottom: 10px;
-          margin-top: 15px;
-          margin-bottom: 15px;
-      }
-       
-      .list-group-info img {
-          height:75px; 
-          width:75px;
-      }
-      .list-group-info text-left{
-          padding-bottom: -25px;
-      }
-      .list-group-info text-center{
-          padding-top: 25px;
-          padding-bottom: 10px;
-          margin-top: 15px;
-          margin-bottom: 15px;
-      }
-       .btn {
-          padding: 5x 25px !important;
-          font-size: 10px !important;
-          margin-top: 15px;
-      }
-      .prj-name {
-          color:#5bc0de;    
-      }
-      .break{
-          width:100%;
-          margin:3px;
-      }
-      .break2{
-          width: 100%;
-          margin: 10px;
-      }
-      .pull-center{
-          margin-bottom: 20px;
-      }
-      .w3-ul w3-jumbo{
-          margin-left: 20px;
-          margin-right: 20px;
-      }
-      #newuser{
-          text-align: right;
-      }
-    .navbar a {
-        float: left;
-        font-size: 16px;
-        color: white;
-        text-align: center;
-        padding: 14px 16px;
-        text-decoration: none;
     }
 
+    .row.content {
+        height: auto;
+    }
+}
+
+.avatar {
+    vertical-align: middle;
+    width: 130px;
+    height: 130px;
+    border-radius: 100%;
+}
+
+.dialogIsOpen #page-wrap {
+
+    /* Blur and de-color */
+    -webkit-filter: blur(5px) grayscale(50%);
+
+    /* Recede */
+    -webkit-transform: scale(0.9);
+}
+
+.dialogIsOpen #modal {
+
+    /* Regular size and visible */
+    transform: scale(1);
+    /* prefix me */
+    opacity: 1;
+
+    /* Clickable */
+    pointer-events: auto;
+
+}
+
+#page-wrap,
+#modal {
+
+    transition: all 0.4s ease;
+    /* prefix me */
+
+}
+
+.search {
+    padding-top: 25px;
+    margin-left: 75px;
+    margin-right: 75px;
+    margin-bottom: 25px;
+}
+
+.bar {
+    text-align: center;
+}
+
+.list-content .list-group .title {
+    font-weight: bold;
+    height: 50px;
+}
+
+.message {
+    font-size: 10px;
+}
+
+.nameMessage {
+    font-weight: bold;
+}
+
+.list-content {
+    margin-top: 25px;
+}
+
+.list-group-item img {
+    height: 50px;
+    width: 50px;
+}
+
+.list-group-item text-left {
+    padding-bottom: -25px;
+}
+
+.list-group-item text-center {
+    padding-top: 25px;
+    padding-bottom: 10px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.list-group-info img {
+    height: 75px;
+    width: 75px;
+}
+
+.list-group-info text-left {
+    padding-bottom: -25px;
+}
+
+.list-group-info text-center {
+    padding-top: 25px;
+    padding-bottom: 10px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.btn {
+    padding: 5x 25px !important;
+    font-size: 10px !important;
+    margin-top: 15px;
+}
+
+.prj-name {
+    color: #5bc0de;
+}
+
+.break {
+    width: 100%;
+    margin: 3px;
+}
+
+.break2 {
+    width: 100%;
+    margin: 10px;
+}
+
+.pull-center {
+    margin-bottom: 20px;
+}
+
+.w3-ul w3-jumbo {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+#newuser {
+    text-align: right;
+}
+
+.navbar a {
+    float: left;
+    font-size: 16px;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
 
 @include transition(all 0.4s ease);
 @include filter(blur(5px) grayscale(50%));
 @include transform(scale(0.9));
-      @media screen and (max-width: 600px){
-          .column{
-              width: 100%;
-              height: auto;
-          }
-      }
-   
-</style>
-    <script>
-        function login(){
-            $.ajax({
-                url: "/home",
-                type: 'POST',
-                dataType: 'json', // added data type
-                data: {username: $("#username").val() , password: $("#password").val()},
-                success: function(data) {
-                    $("#profile_pic").attr("src", data['profile_pic']);
-                    console.log(data['friends']);
-                    buildFriendsList(JSON.parse(data['friends']));
-                    $("body").toggleClass("dialogIsOpen");
-                    $('#modal1').modal('hide');
-                    return;
-                }
-            });
-        }
-        
-        function buildFriendsList(data){
-            var conn = '<li href="#" class="list-group-item title">Your Connections</li>';
-            console.log(data);
-            console.log(Object.keys(data).length)
-            for(var i = 0; i < Object.keys(data).length; i++){
-                conn = conn + '<li href="#" class="list-group-item text-left"><img class="img-thumbnail" src="'+data[i]['profile_pic']+'"><label class="name">'+data[i]['username']+'<br></label><label class="pull-right"><a class="btn btn-success btn-xs glyphicon glyphicon-user" href="#" title="View"></a></label><div class="break"></div></li>';
-            }
-            $('#connections_list').html(conn);
-        }
-    
-    jQuery(document).ready(function(){
-        $(".dropdown").hover(
-            function() { $('.dropdown-menu', this).fadeIn("fast");
-            },
-            function() { $('.dropdown-menu', this).fadeOut("fast");
-        });
-        $("body").toggleClass("dialogIsOpen");
-    });
-        
-        $("#login").onclick( function() {
-            $("body").toggleClass("dialogIsOpen");
-        });
+
+@media screen and (max-width: 600px) {
+    .column {
+        width: 100%;
+        height: auto;
+    }
+}
   
+</style>
+    
+<script>
+   
+var GLOBAL_MESSAGES;
+
+function login() {
+    $.ajax({
+        url: "/home",
+        type: 'POST',
+        dataType: 'json', // added data type
+        data: {
+            username: $("#username").val(),
+            password: $("#password").val()
+        },
+        success: function (data) {
+            $("#profile_pic").attr("src", data['profile_pic']);
+            console.log(data['friends']);
+            buildFriendsList(JSON.parse(data['friends']));
+            buildMessageList(JSON.parse(data['friends']));
+            $("body").toggleClass("dialogIsOpen");
+            $('#modal1').modal('hide');
+            return;
+        }
+    });
+}
+
+function buildFriendsList(data) {
+    var conn = '<li href="#" class="list-group-item title">Your Connections</li>';
+    for (var i = 0; i < Object.keys(data).length; i++) {
+        conn = conn + '<li href="#" class="list-group-item text-left"><img class="img-thumbnail" src="' + data[i]['profile_pic'] + '"><label class="name">' + data[i]['username'] + '<br></label><label class="pull-right"><a class="btn btn-success btn-xs glyphicon glyphicon-user" href="#" title="View"></a></label><div class="break"></div></li>';
+    }
+    $('#connections_list').html(conn);
+}
+
+function buildMessageList(data) {
+    var conn = '<li href="#" class="list-group-item title">Your Messages</li>';
+    for (var i = 0; i < Object.keys(data).length; i++) {
+        if(data[i]['messages'] != null){
+            GLOBAL_MESSAGES[data[i]['username']] = data[i]['messages'];
+            conn = conn + '<li href="#" class="list-group-item text-left"><img class="img-thumbnail" src="'+data[i]['profile_pic']+'"><label class="pull-right"><a class="btn btn-success btn-xs glyphicon glyphicon-envelope" href="#" title="View"></a></label><label class="nameMessage">'+data[i]['username']+'</label><label class="message">Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br></label><div class="break"></div></li>;
+        }
+    }
+    $('#connections_list').html(conn);
+}
+
+$(document).ready(function () {
+    $("#modal").modal('show');
+    $("body").toggleClass("dialogIsOpen");
+    $("#Modal-Login").show()
+    $("#Modal-Sign-Up").hide();
+    $("#Landing-Center").show().fadeIn("fast");
+    $("#Center-Selection").hide();
+});
+
+function newUser() {
+    $("#Modal-Login").hide();
+    $("#Modal-Sign-Up").show();
+}
+
+function CancelLogin() {
+    $("#modal").modal('hide');
+    $("body").toggleClass("dialogIsOpen");
+}
+
+function SelectionToHome() {
+    $("#Landing-Center").show();
+    $("#Center-Selection").hide();
+}
+
+function Selection() {
+    $("#Landing-Center").hide();
+    $("#Center-Selection").show();
+}
+
+$("#logout-btn").on("click", function() {
+    $("#modal").modal('show');
+    $("body").toggleClass("dialogIsOpen");
+}) 
 </script>
-</head>
 
 <body>
 
-    <div id="page-wrap" class="dialogIsOpen">
-        <nav class="navbar navbar-inverse">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="#">Weaves</a>
+    <div id="page-wrap">
+        <div id="main" class="dialogIsOpen">
+            <nav class="navbar navbar-inverse">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#">Weaves</a>
+                    </div>
+                    <div class="collapse navbar-collapse" id="myNavbar">
+                        <ul class="nav navbar-nav">
+                            <li class="active"><a href="#">Home</a></li>
+                            <li class="dropdown">
+                                <a href="#" data-toggle="dropdown" class="dropdown-toggle">About <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Will's Journal</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Evan's Journal</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Screen Shots of Progression</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a id="logout-btn">Logout</a></li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="collapse navbar-collapse" id="myNavbar">
-                    <ul class="nav navbar-nav">
-                        <li class="active"><a href="#">Home</a></li>
-                        <li class="dropdown">
-                            <a href="#" data-toggle="dropdown" class="dropdown-toggle">About <b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#">Will's Journal</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#">Evan's Journal</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#">Screen Shots of Progression</a></li>
+            </nav>
+
+            <div class="container-fluid text-center blur greyscale" style="padding-left: 0px; padding-right: 0px;">
+                <div class="">
+                    <div class="col-sm-2 sidenav">
+                        <p>
+                            <meta name="viewport" content="width=device-width, initial-scale=1">
+                        </p>
+                        <img id="profile_pic" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Missing_avatar.svg/425px-Missing_avatar.svg.png" alt="Avatar" class="avatar">
+                        <p> </p>
+                        <div class="list-content">
+                            <ul class="connections_list" class="list-group">
+
                             </ul>
-                        </li>
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li id="logout"><a href="#">Logout</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-
-        <div class="container-fluid text-center blur greyscale">
-            <div class="row content">
-                <div class="col-sm-2 sidenav">
-                    <p>
-                        <meta name="viewport" content="width=device-width, initial-scale=1">
-                    </p>
-                    <img id="profile_pic" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Missing_avatar.svg/425px-Missing_avatar.svg.png" alt="Avatar" class="avatar">
-                    <p> </p>
-                    <div class="list-content">
-                        <ul id="connections_list" class="list-group">
-                            <!-- Friends List is displayed here -->
-                        </ul>
+                        </div>
                     </div>
-                </div>
 
-                <div id="main" class="col-sm-8 text-left">
-                    <!-- Search form -->
-                    <div class="md-form search">
-                        <input class="form-control bar" type="text" placeholder="Search" aria-label="Search">
+                    <div id="main" class="col-sm-8 text-left">
+                        <!-- Search form -->
+                        <div class="md-form search">
+                            <input class="form-control bar" type="text" placeholder="Search" aria-label="Search">
+                        </div>
+                        <div id="Landing-Center">
+                            <dl class="w3-ul w3-jumbo">
+                                <dt href="#" class="list-group-info text-left">
+                                    <img class="img-thumbnail" src="https://images.pexels.com/photos/1036857/pexels-photo-1036857.jpeg?cs=srgb&dl=chain-close-up-display-1036857.jpg&fm=jpg">
+                                    <label class="name">
+                                        Lorem Ipsum
+                                    </label>
+                                    <label class="pull-right">
+                                        <button id="Chevron-Right" onclick="Selection()" class="btn btn-go btn-xs glyphicon glyphicon-chevron-right" href="#" title="View"></button>
+                                    </label>
+                                    <div class="break2"></div>
+                                </dt>
+                                <dd>
+                                    <label class="pull-center">
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+
+                                    </label>
+
+                                </dd>
+                                <dt href="#" class="list-group-info text-left">
+                                    <img class="img-thumbnail" src="https://images.pexels.com/photos/1036857/pexels-photo-1036857.jpeg?cs=srgb&dl=chain-close-up-display-1036857.jpg&fm=jpg">
+                                    <label class="name">
+                                        Lorem Ipsum
+                                    </label>
+                                    <label class="pull-right">
+                                        <button id="Chevron-Right" onclick="Selection()" class="btn btn-go btn-xs glyphicon glyphicon-chevron-right" href="#" title="View"></button>
+                                    </label>
+                                    <div class="break2"></div>
+                                </dt>
+                                <dd>
+                                    <label class="pull-center">
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+
+                                    </label>
+
+                                </dd>
+                                <dt href="#" class="list-group-info text-left">
+                                    <img class="img-thumbnail" src="https://images.pexels.com/photos/1036857/pexels-photo-1036857.jpeg?cs=srgb&dl=chain-close-up-display-1036857.jpg&fm=jpg">
+                                    <label class="name">
+                                        Lorem Ipsum
+                                    </label>
+                                    <label class="pull-right">
+                                        <button id="Chevron-Right" onclick="Selection()" class="btn btn-go btn-xs glyphicon glyphicon-chevron-right" href="#" title="View"></button>
+                                        <div class="break2"></div>
+                                    </label>
+                                </dt>
+                                <dd>
+                                    <label class="pull-center">
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+
+                                    </label>
+
+                                </dd>
+                                <dt href="#" class="list-group-info text-left">
+                                    <img class="img-thumbnail" src="https://images.pexels.com/photos/1036857/pexels-photo-1036857.jpeg?cs=srgb&dl=chain-close-up-display-1036857.jpg&fm=jpg">
+                                    <label class="name">
+                                        Lorem Ipsum
+                                    </label>
+                                    <label class="pull-right">
+                                        <button id="Chevron-Right" onclick="Selection()" class="btn btn-go btn-xs glyphicon glyphicon-chevron-right" href="#" title="View"></button>
+                                        <div class="break2"></div>
+                                    </label>
+                                </dt>
+                                <dd>
+                                    <label class="pull-center">
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+
+                                    </label>
+
+                                </dd>
+
+                            </dl>
+                        </div>
+
+                        <div id="Center-Selection">
+                            <dl class="w3-ul w3-jumbo">
+                                <dt href="#" class="list-group-info text-left">
+                                    <img class="img-thumbnail" src="https://images.pexels.com/photos/1036857/pexels-photo-1036857.jpeg?cs=srgb&dl=chain-close-up-display-1036857.jpg&fm=jpg">
+                                    <label class="name">
+                                        Lorem Ipsum
+                                    </label>
+                                    <label class="pull-right">
+                                        <button id="Chevron-Left" onclick="SelectionToHome()" class="btn btn-go btn-xs glyphicon glyphicon-chevron-left" href="#" title="View"></button>
+                                    </label>
+                                    <div class="break2"></div>
+                                </dt>
+                                <dd>
+                                    <label class="pull-center">
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                    </label>
+
+                                </dd>
+                            </dl>
+                        </div>
                     </div>
-                    <dl class="w3-ul w3-jumbo">
-                        <dt href="#" class="list-group-info text-left">
-                            <img class="img-thumbnail" src="https://images.pexels.com/photos/1036857/pexels-photo-1036857.jpeg?cs=srgb&dl=chain-close-up-display-1036857.jpg&fm=jpg">
-                            <label class="name">
-                                Lorem Ipsum
-                            </label>
-                            <label class="pull-right">
-                                <a class="btn btn-go btn-xs glyphicon glyphicon-chevron-right" href="#" title="View"></a>
-                            </label>
-                            <div class="break2"></div>
-                        </dt>
-                        <dd>
-                            <label class="pull-center">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    <div class="col-sm-2 sidenav">
+                        <div class="group-list">
+                            <ul class="list-group">
+                                <!--<li href="#" class="list-group-item title">
+                                    Your Messages
+                                </li>
+                                <li href="#" class="list-group-item text-left">
+                                    <img class="img-thumbnail" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Missing_avatar.svg/425px-Missing_avatar.svg.png">
+                                    <label class="pull-right">
+                                        <a class="btn btn-success btn-xs glyphicon glyphicon-envelope" href="#" title="View"></a>
+                                    </label>
+                                    <label class="nameMessage">
+                                        Friend
 
-                            </label>
+                                    </label>
+                                    <label class="message">
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br></label>
 
-                        </dd>
-                        <dt href="#" class="list-group-info text-left">
-                            <img class="img-thumbnail" src="https://images.pexels.com/photos/1036857/pexels-photo-1036857.jpeg?cs=srgb&dl=chain-close-up-display-1036857.jpg&fm=jpg">
-                            <label class="name">
-                                Lorem Ipsum
-                            </label>
-                            <label class="pull-right">
-                                <a class="btn btn-go btn-xs glyphicon glyphicon-chevron-right" href="#" title="View"></a>
-                            </label>
-                            <div class="break2"></div>
-                        </dt>
-                        <dd>
-                            <label class="pull-center">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                    <div class="break"></div>
+                                </li>
+                                <li href="#" class="list-group-item text-left">
+                                    <img class="img-thumbnail" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Missing_avatar.svg/425px-Missing_avatar.svg.png">
+                                    <label class="pull-right">
+                                        <a class="btn btn-success btn-xs glyphicon glyphicon-envelope" href="#" title="View"></a>
 
-                            </label>
+                                    </label>
+                                    <label class="nameMessage">
+                                        Friend
 
-                        </dd>
-                        <dt href="#" class="list-group-info text-left">
-                            <img class="img-thumbnail" src="https://images.pexels.com/photos/1036857/pexels-photo-1036857.jpeg?cs=srgb&dl=chain-close-up-display-1036857.jpg&fm=jpg">
-                            <label class="name">
-                                Lorem Ipsum
-                            </label>
-                            <label class="pull-right">
-                                <a class="btn btn-go btn-xs glyphicon glyphicon-chevron-right" href="#" title="View"></a>
-                            </label>
-                            <div class="break2"></div>
-                        </dt>
-                        <dd>
-                            <label class="pull-center">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                    </label>
+                                    <label class="message">
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                    </label>
 
-                            </label>
+                                    <div class="break"></div>
+                                </li>
+                                <li href="#" class="list-group-item text-left">
+                                    <img class="img-thumbnail" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Missing_avatar.svg/425px-Missing_avatar.svg.png">
+                                    <label class="pull-right">
+                                        <a class="btn btn-success btn-xs glyphicon glyphicon-envelope" href="#" title="View"></a>
 
-                        </dd>
-                        <dt href="#" class="list-group-info text-left">
-                            <img class="img-thumbnail" src="https://images.pexels.com/photos/1036857/pexels-photo-1036857.jpeg?cs=srgb&dl=chain-close-up-display-1036857.jpg&fm=jpg">
-                            <label class="name">
-                                Lorem Ipsum
-                            </label>
-                            <label class="pull-right">
-                                <a class="btn btn-go btn-xs glyphicon glyphicon-chevron-right" href="#" title="View"></a>
-                            </label>
-                            <div class="break2"></div>
-                        </dt>
-                        <dd>
-                            <label class="pull-center">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                    </label>
+                                    <label class="nameMessage">
+                                        Friend
+                                    </label>
+                                    <label class="message">
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                    </label>
+                                    <div class="break"></div>
+                                </li>
+                                <li href="#" class="list-group-item text-left">
+                                    <img class="img-thumbnail" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Missing_avatar.svg/425px-Missing_avatar.svg.png">
+                                    <label class="pull-right">
+                                        <a class="btn btn-success btn-xs glyphicon glyphicon-envelope" href="#" title="View"></a>
 
-                            </label>
+                                    </label>
+                                    <label class="nameMessage">
+                                        Friend
+                                    </label>
+                                    <label class="message">
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                    </label>
+                                    <div class="break"></div>
+                                </li>
+                                <li href="#" class="list-group-item text-left">
+                                    <img class="img-thumbnail" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Missing_avatar.svg/425px-Missing_avatar.svg.png">
+                                    <label class="pull-right">
+                                        <a class="btn btn-success btn-xs glyphicon glyphicon-envelope" href="#" title="View"></a>
 
-                        </dd>
+                                    </label>
+                                    <label class="nameMessage">
+                                        Friend
+                                    </label>
+                                    <label class="message">
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                    </label>
+                                    <div class="break"></div>
+                                </li>
+                                <li href="#" class="list-group-item text-left">
+                                    <img class="img-thumbnail" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Missing_avatar.svg/425px-Missing_avatar.svg.png">
+                                    <label class="pull-right">
+                                        <a class="btn btn-success btn-xs glyphicon glyphicon-envelope" href="#" title="View"></a>
 
-                    </dl>
-                </div>
+                                    </label>
+                                    <label class="nameMessage">
+                                        Friend
+                                    </label>
+                                    <label class="message">
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                    </label>
+                                    <div class="break"></div>
+                                </li>
+                                <li href="#" class="list-group-item text-left">
+                                    <img class="img-thumbnail" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Missing_avatar.svg/425px-Missing_avatar.svg.png">
+                                    <label class="pull-right">
+                                        <a class="btn btn-success btn-xs glyphicon glyphicon-envelope" href="#" title="View"></a>
 
-                <div class="col-sm-2 sidenav">
-                    <div class="group-list">
-                        <ul class="list-group">
-                            <li href="#" class="list-group-item title">
-                                Your Messages
-                            </li>
-                            <li href="#" class="list-group-item text-left">
-                                <img class="img-thumbnail" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Missing_avatar.svg/425px-Missing_avatar.svg.png">
-                                <label class="pull-right">
-                                    <a class="btn btn-success btn-xs glyphicon glyphicon-envelope" href="#" title="View"></a>
-                                </label>
-                                <label class="nameMessage">
-                                    Friend
+                                    </label>
+                                    <label class="nameMessage">
+                                        Friend
+                                    </label>
+                                    <label class="message">
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                    </label>
+                                    <div class="break"></div>
+                                </li>
 
-                                </label>
-                                <label class="message">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br></label>
-
-                                <div class="break"></div>
-                            </li>
-                            <li href="#" class="list-group-item text-left">
-                                <img class="img-thumbnail" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Missing_avatar.svg/425px-Missing_avatar.svg.png">
-                                <label class="pull-right">
-                                    <a class="btn btn-success btn-xs glyphicon glyphicon-envelope" href="#" title="View"></a>
-
-                                </label>
-                                <label class="nameMessage">
-                                    Friend
-
-                                </label>
-                                <label class="message">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                </label>
-
-                                <div class="break"></div>
-                            </li>
-                            <li href="#" class="list-group-item text-left">
-                                <img class="img-thumbnail" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Missing_avatar.svg/425px-Missing_avatar.svg.png">
-                                <label class="pull-right">
-                                    <a class="btn btn-success btn-xs glyphicon glyphicon-envelope" href="#" title="View"></a>
-
-                                </label>
-                                <label class="nameMessage">
-                                    Friend
-                                </label>
-                                <label class="message">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                </label>
-                                <div class="break"></div>
-                            </li>
-                            <li href="#" class="list-group-item text-left">
-                                <img class="img-thumbnail" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Missing_avatar.svg/425px-Missing_avatar.svg.png">
-                                <label class="pull-right">
-                                    <a class="btn btn-success btn-xs glyphicon glyphicon-envelope" href="#" title="View"></a>
-
-                                </label>
-                                <label class="nameMessage">
-                                    Friend
-                                </label>
-                                <label class="message">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                </label>
-                                <div class="break"></div>
-                            </li>
-
-                            <li href="#" class="list-group-item text-left">
-                                <a class="btn btn-block btn-primary">
-                                    <i class="glyphicon glyphicon-refresh"></i>
-                                    Load more...
-                                </a>
-                            </li>
-                        </ul>
+                                <li href="#" class="list-group-item text-left">
+                                    <a class="btn btn-block btn-primary">
+                                        <i class="glyphicon glyphicon-refresh"></i>
+                                        Load more...
+                                    </a>
+                                </li>-->
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -424,39 +555,307 @@
         <p>Under Direction of Dr. Husnu Narman</p>
     </footer>
 
-
-
-    <div id="modal1" class="dialogIsOpen modal show" tabindex="-1" role="dialog" aria-hidden="true">
+    <div id="modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h3>Login</h3>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group">
-                        <label for="uname1">Username</label>
-                        <input type="text" class="form-control form-control-lg" name="uname1" id="username" required="">
-                        <div class="invalid-feedback"></div>
+                    <div id="Modal-Login">
+                        <div class="form-group"><label for="uname1">Username</label><input type="text" class="form-control form-control-lg" name="uname1" id="username" required="">
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="form-group"><label>Password</label><input type="password" class="form-control form-control-lg" id="password" required="" autocomplete="new-password">
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" id="rememberMe"><label class="custom-control-label" for="rememberMe">Remember me on this computer</label>
+                        </div>
+                        <div class="form-group py-4"><button id="close" class="btn btn-outline-secondary btn-lg" data-dismiss="modal" aria-hidden="true" onclick="CancelLogin()">Cancel</button><button id="login" type="submit" class="btn btn-success btn-lg float-right" id="btnLogin" onclick="login()">Login</button><button id="newuser" class="btn btn-outline-secondary btn-lg" aria-hidden="true" onclick="newUser()">New user?</button></div>
                     </div>
-                    <div class="form-group">
-                        <label>Password</label>
-                        <input type="password" class="form-control form-control-lg" id="password" required="" autocomplete="new-password">
-                        <div class="invalid-feedback"></div>
-                    </div>
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="rememberMe">
-                        <label class="custom-control-label" for="rememberMe">Remember me on this computer</label>
-                    </div>
-                    <a href="" id="newuser" class="float-right">New user?</a>
-                    <div class="form-group py-4">
-                        <button id="login" class="btn btn-success btn-lg float-right" onclick="login()">Login</button>
+                    <div id="Modal-Sign-Up">
+                        <div class="form-group"><label>First Name</label><input type="text" class="form-control form-control-lg" id="FirstName" required="" autocomplete="Enter-Name">
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="form-group"><label>Last Name</label><input type="text" class="form-control form-control-lg" id="LastName" required="" autocomplete="Enter-Name">
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="form-group"><label>Email</label><input type="text" class="form-control form-control-lg" id="Email" required="" autocomplete="Enter-Email">
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="form-group"><label for="uname1">Username</label><input type="text" class="form-control form-control-lg" name="uname1" id="username" required="">
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="form-group"><label>Password</label><input type="password" class="form-control form-control-lg" id="password" required="" autocomplete="new-password">
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="form-group"><label>Phone Number</label><input type="password" class="form-control form-control-lg" id="phoneNumber" required="" autocomplete="new-phone">
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="form-group"><label for="origin">Country</label><span style="color: red !important; display: inline; float: none;">*</span><select id="origin" name="origin" class="form-label">
+                                <option value="Afghanistan">Afghanistan</option>
+                                <option value="Åland Islands">Åland Islands</option>
+                                <option value="Albania">Albania</option>
+                                <option value="Algeria">Algeria</option>
+                                <option value="American Samoa">American Samoa</option>
+                                <option value="Andorra">Andorra</option>
+                                <option value="Angola">Angola</option>
+                                <option value="Anguilla">Anguilla</option>
+                                <option value="Antarctica">Antarctica</option>
+                                <option value="Antigua and Barbuda">Antigua and Barbuda</option>
+                                <option value="Argentina">Argentina</option>
+                                <option value="Armenia">Armenia</option>
+                                <option value="Aruba">Aruba</option>
+                                <option value="Australia">Australia</option>
+                                <option value="Austria">Austria</option>
+                                <option value="Azerbaijan">Azerbaijan</option>
+                                <option value="Bahamas">Bahamas</option>
+                                <option value="Bahrain">Bahrain</option>
+                                <option value="Bangladesh">Bangladesh</option>
+                                <option value="Barbados">Barbados</option>
+                                <option value="Belarus">Belarus</option>
+                                <option value="Belgium">Belgium</option>
+                                <option value="Belize">Belize</option>
+                                <option value="Benin">Benin</option>
+                                <option value="Bermuda">Bermuda</option>
+                                <option value="Bhutan">Bhutan</option>
+                                <option value="Bolivia">Bolivia</option>
+                                <option value="Bosnia and Herzegovina">Bosnia and Herzegovina</option>
+                                <option value="Botswana">Botswana</option>
+                                <option value="Bouvet Island">Bouvet Island</option>
+                                <option value="Brazil">Brazil</option>
+                                <option value="British Indian Ocean Territory">British Indian Ocean Territory</option>
+                                <option value="Brunei Darussalam">Brunei Darussalam</option>
+                                <option value="Bulgaria">Bulgaria</option>
+                                <option value="Burkina Faso">Burkina Faso</option>
+                                <option value="Burundi">Burundi</option>
+                                <option value="Cambodia">Cambodia</option>
+                                <option value="Cameroon">Cameroon</option>
+                                <option value="Canada">Canada</option>
+                                <option value="Cape Verde">Cape Verde</option>
+                                <option value="Cayman Islands">Cayman Islands</option>
+                                <option value="Central African Republic">Central African Republic</option>
+                                <option value="Chad">Chad</option>
+                                <option value="Chile">Chile</option>
+                                <option value="China">China</option>
+                                <option value="Christmas Island">Christmas Island</option>
+                                <option value="Cocos (Keeling) Islands">Cocos (Keeling) Islands</option>
+                                <option value="Colombia">Colombia</option>
+                                <option value="Comoros">Comoros</option>
+                                <option value="Congo">Congo</option>
+                                <option value="Congo, The Democratic Republic of The">Congo,
+                                    The Democratic Republic of The</option>
+                                <option value="Cook Islands">Cook Islands</option>
+                                <option value="Costa Rica">Costa Rica</option>
+                                <option value="Cote D'ivoire">Cote D'ivoire</option>
+                                <option value="Croatia">Croatia</option>
+                                <option value="Cuba">Cuba</option>
+                                <option value="Cyprus">Cyprus</option>
+                                <option value="Czech Republic">Czech Republic</option>
+                                <option value="Denmark">Denmark</option>
+                                <option value="Djibouti">Djibouti</option>
+                                <option value="Dominica">Dominica</option>
+                                <option value="Dominican Republic">Dominican Republic</option>
+                                <option value="Ecuador">Ecuador</option>
+                                <option value="Egypt">Egypt</option>
+                                <option value="El Salvador">El Salvador</option>
+                                <option value="Equatorial Guinea">Equatorial Guinea</option>
+                                <option value="Eritrea">Eritrea</option>
+                                <option value="Estonia">Estonia</option>
+                                <option value="Ethiopia">Ethiopia</option>
+                                <option value="Falkland Islands (Malvinas)">Falkland Islands (Malvinas)</option>
+                                <option value="Faroe Islands">Faroe Islands</option>
+                                <option value="Fiji">Fiji</option>
+                                <option value="Finland">Finland</option>
+                                <option value="France">France</option>
+                                <option value="French Guiana">French Guiana</option>
+                                <option value="French Polynesia">French Polynesia</option>
+                                <option value="French Southern Territories">French Southern Territories</option>
+                                <option value="Gabon">Gabon</option>
+                                <option value="Gambia">Gambia</option>
+                                <option value="Georgia">Georgia</option>
+                                <option value="Germany">Germany</option>
+                                <option value="Ghana">Ghana</option>
+                                <option value="Gibraltar">Gibraltar</option>
+                                <option value="Greece">Greece</option>
+                                <option value="Greenland">Greenland</option>
+                                <option value="Grenada">Grenada</option>
+                                <option value="Guadeloupe">Guadeloupe</option>
+                                <option value="Guam">Guam</option>
+                                <option value="Guatemala">Guatemala</option>
+                                <option value="Guernsey">Guernsey</option>
+                                <option value="Guinea">Guinea</option>
+                                <option value="Guinea-bissau">Guinea-bissau</option>
+                                <option value="Guyana">Guyana</option>
+                                <option value="Haiti">Haiti</option>
+                                <option value="Heard Island and Mcdonald Islands">Heard Island and Mcdonald Islands</option>
+                                <option value="Holy See (Vatican City State)">Holy See (Vatican City State)</option>
+                                <option value="Honduras">Honduras</option>
+                                <option value="Hong Kong">Hong Kong</option>
+                                <option value="Hungary">Hungary</option>
+                                <option value="Iceland">Iceland</option>
+                                <option value="India">India</option>
+                                <option value="Indonesia">Indonesia</option>
+                                <option value="Iran, Islamic Republic of">Iran,
+                                    Islamic Republic of</option>
+                                <option value="Iraq">Iraq</option>
+                                <option value="Ireland">Ireland</option>
+                                <option value="Isle of Man">Isle of Man</option>
+                                <option value="Israel">Israel</option>
+                                <option value="Italy">Italy</option>
+                                <option value="Jamaica">Jamaica</option>
+                                <option value="Japan">Japan</option>
+                                <option value="Jersey">Jersey</option>
+                                <option value="Jordan">Jordan</option>
+                                <option value="Kazakhstan">Kazakhstan</option>
+                                <option value="Kenya">Kenya</option>
+                                <option value="Kiribati">Kiribati</option>
+                                <option value="Korea, Democratic People's Republic of">Korea,
+                                    Democratic People's Republic of</option>
+                                <option value="Korea, Republic of">Korea,
+                                    Republic of</option>
+                                <option value="Kuwait">Kuwait</option>
+                                <option value="Kyrgyzstan">Kyrgyzstan</option>
+                                <option value="Lao People's Democratic Republic">Lao People's Democratic Republic</option>
+                                <option value="Latvia">Latvia</option>
+                                <option value="Lebanon">Lebanon</option>
+                                <option value="Lesotho">Lesotho</option>
+                                <option value="Liberia">Liberia</option>
+                                <option value="Libyan Arab Jamahiriya">Libyan Arab Jamahiriya</option>
+                                <option value="Liechtenstein">Liechtenstein</option>
+                                <option value="Lithuania">Lithuania</option>
+                                <option value="Luxembourg">Luxembourg</option>
+                                <option value="Macao">Macao</option>
+                                <option value="Macedonia, The Former Yugoslav Republic of">Macedonia,
+                                    The Former Yugoslav Republic of</option>
+                                <option value="Madagascar">Madagascar</option>
+                                <option value="Malawi">Malawi</option>
+                                <option value="Malaysia">Malaysia</option>
+                                <option value="Maldives">Maldives</option>
+                                <option value="Mali">Mali</option>
+                                <option value="Malta">Malta</option>
+                                <option value="Marshall Islands">Marshall Islands</option>
+                                <option value="Martinique">Martinique</option>
+                                <option value="Mauritania">Mauritania</option>
+                                <option value="Mauritius">Mauritius</option>
+                                <option value="Mayotte">Mayotte</option>
+                                <option value="Mexico">Mexico</option>
+                                <option value="Micronesia, Federated States of">Micronesia,
+                                    Federated States of</option>
+                                <option value="Moldova, Republic of">Moldova,
+                                    Republic of</option>
+                                <option value="Monaco">Monaco</option>
+                                <option value="Mongolia">Mongolia</option>
+                                <option value="Montenegro">Montenegro</option>
+                                <option value="Montserrat">Montserrat</option>
+                                <option value="Morocco">Morocco</option>
+                                <option value="Mozambique">Mozambique</option>
+                                <option value="Myanmar">Myanmar</option>
+                                <option value="Namibia">Namibia</option>
+                                <option value="Nauru">Nauru</option>
+                                <option value="Nepal">Nepal</option>
+                                <option value="Netherlands">Netherlands</option>
+                                <option value="Netherlands Antilles">Netherlands Antilles</option>
+                                <option value="New Caledonia">New Caledonia</option>
+                                <option value="New Zealand">New Zealand</option>
+                                <option value="Nicaragua">Nicaragua</option>
+                                <option value="Niger">Niger</option>
+                                <option value="Nigeria">Nigeria</option>
+                                <option value="Niue">Niue</option>
+                                <option value="Norfolk Island">Norfolk Island</option>
+                                <option value="Northern Mariana Islands">Northern Mariana Islands</option>
+                                <option value="Norway">Norway</option>
+                                <option value="Oman">Oman</option>
+                                <option value="Pakistan">Pakistan</option>
+                                <option value="Palau">Palau</option>
+                                <option value="Palestinian Territory, Occupied">Palestinian Territory,
+                                    Occupied</option>
+                                <option value="Panama">Panama</option>
+                                <option value="Papua New Guinea">Papua New Guinea</option>
+                                <option value="Paraguay">Paraguay</option>
+                                <option value="Peru">Peru</option>
+                                <option value="Philippines">Philippines</option>
+                                <option value="Pitcairn">Pitcairn</option>
+                                <option value="Poland">Poland</option>
+                                <option value="Portugal">Portugal</option>
+                                <option value="Puerto Rico">Puerto Rico</option>
+                                <option value="Qatar">Qatar</option>
+                                <option value="Reunion">Reunion</option>
+                                <option value="Romania">Romania</option>
+                                <option value="Russian Federation">Russian Federation</option>
+                                <option value="Rwanda">Rwanda</option>
+                                <option value="Saint Helena">Saint Helena</option>
+                                <option value="Saint Kitts and Nevis">Saint Kitts and Nevis</option>
+                                <option value="Saint Lucia">Saint Lucia</option>
+                                <option value="Saint Pierre and Miquelon">Saint Pierre and Miquelon</option>
+                                <option value="Saint Vincent and The Grenadines">Saint Vincent and The Grenadines</option>
+                                <option value="Samoa">Samoa</option>
+                                <option value="San Marino">San Marino</option>
+                                <option value="Sao Tome and Principe">Sao Tome and Principe</option>
+                                <option value="Saudi Arabia">Saudi Arabia</option>
+                                <option value="Senegal">Senegal</option>
+                                <option value="Serbia">Serbia</option>
+                                <option value="Seychelles">Seychelles</option>
+                                <option value="Sierra Leone">Sierra Leone</option>
+                                <option value="Singapore">Singapore</option>
+                                <option value="Slovakia">Slovakia</option>
+                                <option value="Slovenia">Slovenia</option>
+                                <option value="Solomon Islands">Solomon Islands</option>
+                                <option value="Somalia">Somalia</option>
+                                <option value="South Africa">South Africa</option>
+                                <option value="South Georgia and The South Sandwich Islands">South Georgia and The South Sandwich Islands</option>
+                                <option value="Spain">Spain</option>
+                                <option value="Sri Lanka">Sri Lanka</option>
+                                <option value="Sudan">Sudan</option>
+                                <option value="Suriname">Suriname</option>
+                                <option value="Svalbard and Jan Mayen">Svalbard and Jan Mayen</option>
+                                <option value="Swaziland">Swaziland</option>
+                                <option value="Sweden">Sweden</option>
+                                <option value="Switzerland">Switzerland</option>
+                                <option value="Syrian Arab Republic">Syrian Arab Republic</option>
+                                <option value="Taiwan, Province of China">Taiwan,
+                                    Province of China</option>
+                                <option value="Tajikistan">Tajikistan</option>
+                                <option value="Tanzania, United Republic of">Tanzania,
+                                    United Republic of</option>
+                                <option value="Thailand">Thailand</option>
+                                <option value="Timor-leste">Timor-leste</option>
+                                <option value="Togo">Togo</option>
+                                <option value="Tokelau">Tokelau</option>
+                                <option value="Tonga">Tonga</option>
+                                <option value="Trinidad and Tobago">Trinidad and Tobago</option>
+                                <option value="Tunisia">Tunisia</option>
+                                <option value="Turkey">Turkey</option>
+                                <option value="Turkmenistan">Turkmenistan</option>
+                                <option value="Turks and Caicos Islands">Turks and Caicos Islands</option>
+                                <option value="Tuvalu">Tuvalu</option>
+                                <option value="Uganda">Uganda</option>
+                                <option value="Ukraine">Ukraine</option>
+                                <option value="United Arab Emirates">United Arab Emirates</option>
+                                <option value="United Kingdom">United Kingdom</option>
+                                <option value="United States">United States</option>
+                                <option value="United States Minor Outlying Islands">United States Minor Outlying Islands</option>
+                                <option value="Uruguay">Uruguay</option>
+                                <option value="Uzbekistan">Uzbekistan</option>
+                                <option value="Vanuatu">Vanuatu</option>
+                                <option value="Venezuela">Venezuela</option>
+                                <option value="Viet Nam">Viet Nam</option>
+                                <option value="Virgin Islands, British">Virgin Islands,
+                                    British</option>
+                                <option value="Virgin Islands, U.S.">Virgin Islands,
+                                    U.S.</option>
+                                <option value="Wallis and Futuna">Wallis and Futuna</option>
+                                <option value="Western Sahara">Western Sahara</option>
+                                <option value="Yemen">Yemen</option>
+                                <option value="Zambia">Zambia</option>
+                                <option value="Zimbabwe">Zimbabwe</option>
+                            </select></div>
+                        <div class="form-group py-4"><button id="closeregister" class="btn btn-outline-secondary btn-lg" data-dismiss="modal" aria-hidden="true" onclick="CancelLogin()">Cancel</button><button id="signup" type="submit" class="btn btn-success btn-lg float-right" onclick="login()">Sign Up</button></div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-
 </body>
-
 </html>
