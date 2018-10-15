@@ -1,0 +1,462 @@
+<html lang="en">
+
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        /* Remove the navbar's default margin-bottom and rounded borders */ 
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+    }
+    
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {height: 450px}
+    
+    /* Set gray background color and 100% height */
+    .sidenav {
+      padding-top: 20px;
+      background-color: #f1f1f1;
+      height: 140%;
+    }
+    
+    /* Set black background color, white text and some padding */
+    footer {
+      background-color: #555;
+      color: white;
+      padding: 15px;
+      position: fixed;
+      height: 50px;
+      bottom: 0;
+      width: 100%;
+    }
+    
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height:auto;} 
+    }
+      
+    .avatar {
+        vertical-align: middle;
+        width: 130px;
+        height: 130px;
+        border-radius: 100%;
+      }
+  
+    .dialogIsOpen #page-wrap {
+
+        /* Blur and de-color */
+        -webkit-filter: blur(5px) grayscale(50%);
+
+        /* Recede */
+        -webkit-transform: scale(0.9);
+      }
+    .dialogIsOpen #modal1 {
+  
+        /* Regular size and visible */
+        transform: scale(1); /* prefix me */
+        opacity: 1;
+        
+        /* Clickable */
+        pointer-events: auto;
+
+}
+      #page-wrap, #modal1 {
+  
+  transition: all 0.4s ease; /* prefix me */
+
+}
+      
+      .search {
+          padding-top: 25px;
+          margin-left: 75px;
+          margin-right: 75px;
+          margin-bottom: 25px;
+      }
+      .bar {
+           text-align: center;
+      }
+      .list-content .list-group .title{
+          font-weight:bold;
+          height: 50px;
+      }
+      .message{
+          font-size: 10px;
+      }
+      .nameMessage{
+          font-weight: bold;
+      }
+      .list-content{
+          margin-top: 25px;
+      }
+      .list-group-item img {
+          height:50px; 
+          width:50px;
+      }
+      .list-group-item text-left{
+          padding-bottom: -25px;
+      }
+      .list-group-item text-center{
+          padding-top: 25px;
+          padding-bottom: 10px;
+          margin-top: 15px;
+          margin-bottom: 15px;
+      }
+       
+      .list-group-info img {
+          height:75px; 
+          width:75px;
+      }
+      .list-group-info text-left{
+          padding-bottom: -25px;
+      }
+      .list-group-info text-center{
+          padding-top: 25px;
+          padding-bottom: 10px;
+          margin-top: 15px;
+          margin-bottom: 15px;
+      }
+       .btn {
+          padding: 5x 25px !important;
+          font-size: 10px !important;
+          margin-top: 15px;
+      }
+      .prj-name {
+          color:#5bc0de;    
+      }
+      .break{
+          width:100%;
+          margin:3px;
+      }
+      .break2{
+          width: 100%;
+          margin: 10px;
+      }
+      .pull-center{
+          margin-bottom: 20px;
+      }
+      .w3-ul w3-jumbo{
+          margin-left: 20px;
+          margin-right: 20px;
+      }
+      #newuser{
+          text-align: right;
+      }
+    .navbar a {
+        float: left;
+        font-size: 16px;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
+
+
+@include transition(all 0.4s ease);
+@include filter(blur(5px) grayscale(50%));
+@include transform(scale(0.9));
+      @media screen and (max-width: 600px){
+          .column{
+              width: 100%;
+              height: auto;
+          }
+      }
+   
+</style>
+    <script>
+        function login(){
+            $.ajax({
+                url: "/home",
+                type: 'POST',
+                dataType: 'json', // added data type
+                data: {username: $("#username").val() , password: $("#password").val()},
+                success: function(data) {
+                    $("#profile_pic").attr("src", data['profile_pic']);
+                    console.log(data['friends']);
+                    buildFriendsList(JSON.parse(data['friends']));
+                    $("body").toggleClass("dialogIsOpen");
+                    $('#modal1').modal('hide');
+                    return;
+                }
+            });
+        }
+        
+        function buildFriendsList(data){
+            var conn = '<li href="#" class="list-group-item title">Your Connections</li>';
+            console.log(data);
+            console.log(Object.keys(data).length)
+            for(var i = 0; i < Object.keys(data).length; i++){
+                conn = conn + '<li href="#" class="list-group-item text-left"><img class="img-thumbnail" src="'+data[i]['profile_pic']+'"><label class="name">'+data[i]['username']+'<br></label><label class="pull-right"><a class="btn btn-success btn-xs glyphicon glyphicon-user" href="#" title="View"></a></label><div class="break"></div></li>';
+            }
+            $('#connections_list').html(conn);
+        }
+    
+    jQuery(document).ready(function(){
+        $(".dropdown").hover(
+            function() { $('.dropdown-menu', this).fadeIn("fast");
+            },
+            function() { $('.dropdown-menu', this).fadeOut("fast");
+        });
+        $("body").toggleClass("dialogIsOpen");
+    });
+        
+        $("#login").onclick( function() {
+            $("body").toggleClass("dialogIsOpen");
+        });
+  
+</script>
+</head>
+
+<body>
+
+    <div id="page-wrap" class="dialogIsOpen">
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Weaves</a>
+                </div>
+                <div class="collapse navbar-collapse" id="myNavbar">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="#">Home</a></li>
+                        <li class="dropdown">
+                            <a href="#" data-toggle="dropdown" class="dropdown-toggle">About <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Will's Journal</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">Evan's Journal</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">Screen Shots of Progression</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li id="logout"><a href="#">Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container-fluid text-center blur greyscale">
+            <div class="row content">
+                <div class="col-sm-2 sidenav">
+                    <p>
+                        <meta name="viewport" content="width=device-width, initial-scale=1">
+                    </p>
+                    <img id="profile_pic" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Missing_avatar.svg/425px-Missing_avatar.svg.png" alt="Avatar" class="avatar">
+                    <p> </p>
+                    <div class="list-content">
+                        <ul id="connections_list" class="list-group">
+                            <!-- Friends List is displayed here -->
+                        </ul>
+                    </div>
+                </div>
+
+                <div id="main" class="col-sm-8 text-left">
+                    <!-- Search form -->
+                    <div class="md-form search">
+                        <input class="form-control bar" type="text" placeholder="Search" aria-label="Search">
+                    </div>
+                    <dl class="w3-ul w3-jumbo">
+                        <dt href="#" class="list-group-info text-left">
+                            <img class="img-thumbnail" src="https://images.pexels.com/photos/1036857/pexels-photo-1036857.jpeg?cs=srgb&dl=chain-close-up-display-1036857.jpg&fm=jpg">
+                            <label class="name">
+                                Lorem Ipsum
+                            </label>
+                            <label class="pull-right">
+                                <a class="btn btn-go btn-xs glyphicon glyphicon-chevron-right" href="#" title="View"></a>
+                            </label>
+                            <div class="break2"></div>
+                        </dt>
+                        <dd>
+                            <label class="pull-center">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+
+                            </label>
+
+                        </dd>
+                        <dt href="#" class="list-group-info text-left">
+                            <img class="img-thumbnail" src="https://images.pexels.com/photos/1036857/pexels-photo-1036857.jpeg?cs=srgb&dl=chain-close-up-display-1036857.jpg&fm=jpg">
+                            <label class="name">
+                                Lorem Ipsum
+                            </label>
+                            <label class="pull-right">
+                                <a class="btn btn-go btn-xs glyphicon glyphicon-chevron-right" href="#" title="View"></a>
+                            </label>
+                            <div class="break2"></div>
+                        </dt>
+                        <dd>
+                            <label class="pull-center">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+
+                            </label>
+
+                        </dd>
+                        <dt href="#" class="list-group-info text-left">
+                            <img class="img-thumbnail" src="https://images.pexels.com/photos/1036857/pexels-photo-1036857.jpeg?cs=srgb&dl=chain-close-up-display-1036857.jpg&fm=jpg">
+                            <label class="name">
+                                Lorem Ipsum
+                            </label>
+                            <label class="pull-right">
+                                <a class="btn btn-go btn-xs glyphicon glyphicon-chevron-right" href="#" title="View"></a>
+                            </label>
+                            <div class="break2"></div>
+                        </dt>
+                        <dd>
+                            <label class="pull-center">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+
+                            </label>
+
+                        </dd>
+                        <dt href="#" class="list-group-info text-left">
+                            <img class="img-thumbnail" src="https://images.pexels.com/photos/1036857/pexels-photo-1036857.jpeg?cs=srgb&dl=chain-close-up-display-1036857.jpg&fm=jpg">
+                            <label class="name">
+                                Lorem Ipsum
+                            </label>
+                            <label class="pull-right">
+                                <a class="btn btn-go btn-xs glyphicon glyphicon-chevron-right" href="#" title="View"></a>
+                            </label>
+                            <div class="break2"></div>
+                        </dt>
+                        <dd>
+                            <label class="pull-center">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+
+                            </label>
+
+                        </dd>
+
+                    </dl>
+                </div>
+
+                <div class="col-sm-2 sidenav">
+                    <div class="group-list">
+                        <ul class="list-group">
+                            <li href="#" class="list-group-item title">
+                                Your Messages
+                            </li>
+                            <li href="#" class="list-group-item text-left">
+                                <img class="img-thumbnail" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Missing_avatar.svg/425px-Missing_avatar.svg.png">
+                                <label class="pull-right">
+                                    <a class="btn btn-success btn-xs glyphicon glyphicon-envelope" href="#" title="View"></a>
+                                </label>
+                                <label class="nameMessage">
+                                    Friend
+
+                                </label>
+                                <label class="message">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br></label>
+
+                                <div class="break"></div>
+                            </li>
+                            <li href="#" class="list-group-item text-left">
+                                <img class="img-thumbnail" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Missing_avatar.svg/425px-Missing_avatar.svg.png">
+                                <label class="pull-right">
+                                    <a class="btn btn-success btn-xs glyphicon glyphicon-envelope" href="#" title="View"></a>
+
+                                </label>
+                                <label class="nameMessage">
+                                    Friend
+
+                                </label>
+                                <label class="message">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                </label>
+
+                                <div class="break"></div>
+                            </li>
+                            <li href="#" class="list-group-item text-left">
+                                <img class="img-thumbnail" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Missing_avatar.svg/425px-Missing_avatar.svg.png">
+                                <label class="pull-right">
+                                    <a class="btn btn-success btn-xs glyphicon glyphicon-envelope" href="#" title="View"></a>
+
+                                </label>
+                                <label class="nameMessage">
+                                    Friend
+                                </label>
+                                <label class="message">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                </label>
+                                <div class="break"></div>
+                            </li>
+                            <li href="#" class="list-group-item text-left">
+                                <img class="img-thumbnail" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Missing_avatar.svg/425px-Missing_avatar.svg.png">
+                                <label class="pull-right">
+                                    <a class="btn btn-success btn-xs glyphicon glyphicon-envelope" href="#" title="View"></a>
+
+                                </label>
+                                <label class="nameMessage">
+                                    Friend
+                                </label>
+                                <label class="message">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                </label>
+                                <div class="break"></div>
+                            </li>
+
+                            <li href="#" class="list-group-item text-left">
+                                <a class="btn btn-block btn-primary">
+                                    <i class="glyphicon glyphicon-refresh"></i>
+                                    Load more...
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="container-fluid text-center">
+        <p>Under Direction of Dr. Husnu Narman</p>
+    </footer>
+
+
+
+    <div id="modal1" class="dialogIsOpen modal show" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Login</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="uname1">Username</label>
+                        <input type="text" class="form-control form-control-lg" name="uname1" id="username" required="">
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" class="form-control form-control-lg" id="password" required="" autocomplete="new-password">
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="rememberMe">
+                        <label class="custom-control-label" for="rememberMe">Remember me on this computer</label>
+                    </div>
+                    <a href="" id="newuser" class="float-right">New user?</a>
+                    <div class="form-group py-4">
+                        <button id="login" class="btn btn-success btn-lg float-right" onclick="login()">Login</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+</html>

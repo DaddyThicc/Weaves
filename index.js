@@ -5,6 +5,7 @@ var app        = express();
 var mysql      = require('mysql');
 var port       = process.env.PORT || 5000;
 var bodyParser = require('body-parser');
+var path = require('path');
 
 var connection = mysql.createConnection({
   host     : 'localhost',
@@ -16,6 +17,8 @@ var connection = mysql.createConnection({
 // Setup
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({	extended: true })); // support encoded bodies
+app.use(express.static(path.join(__dirname, 'public')));
+
 
 // sends landing page when you first load webpage
 app.get("/", function(req, res) {
@@ -33,6 +36,8 @@ app.post("/home", function(req, res){
         else{
             var data = results[0];
             res.json({fname: data['fname'], lname: data['lname'], email: data['email'], username: data['username'], phone: data['phone'], origin: data['origin'], profile_pic: data['profile_pic'], friends: data['friends_list']});
+            res.emit('close');
+            res.end();
         }
     });
     connection.end();
