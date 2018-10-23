@@ -7,28 +7,27 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    
 
 
 
 <script>
+    var messages = "";
     var socket = io();
     function send_msg(){
-        console.log($('#txt_msg').val());
-        socket.emit('chat message', $('#txt_msg').val());
+        var socket = io();
+        socket.emit('chat message', $('#txt_msg').val());  
+        var msg_template = '<div id="tb-testimonial" class="testimonial testimonial-default"><div class="testimonial-section">' + $('#txt_msg').val() + '</div><div class="testimonial-desc"><img src="https://placeholdit.imgix.net/~text?txtsize=9&txt=100%C3%97100&w=100&h=100" alt="" /><div class="testimonial-writer"><div class="testimonial-writer-name">Zahed Kamal</div><div class="testimonial-writer-designation">Front End Developer</div><a href="#" class="testimonial-writer-company">Touch Base Inc</a></div></div></div>';
         $('#txt_msg').val('');
+        messages += msg_template;
+        $('#chat_messages').html(messages);
+        return false;
     }
-    socket.on('chat message', function(msg) {
-        console.log('text');
-        var msg_template = '<div id="tb-testimonial" class="testimonial testimonial-default"><div class="testimonial-section">' + msg.text + '</div><div class="testimonial-desc"><img src="https://placeholdit.imgix.net/~text?txtsize=9&txt=100%C3%97100&w=100&h=100" alt="" /><div class="testimonial-writer"><div class="testimonial-writer-name">Zahed Kamal</div><div class="testimonial-writer-designation">Front End Developer</div><a href="#" class="testimonial-writer-company">Touch Base Inc</a></div></div></div>';
 
-        $('#chat_messages').html += msg_template;
-        window.scrollTo(0, document.body.scrollHeight);
-    });
-
-    $(document).ready(function() {
+    /*$(document).ready(function() {
         $("#modal").modal('show');
         $("body").toggleClass("dialogIsOpen");
         $("#Modal-Login").show()
@@ -39,7 +38,7 @@
     $("#logout-btn").on("click", function () {
         $("#modal").modal('show');
         $("body").toggleClass("dialogIsOpen");
-    });
+    });*/
 
 </script>
 
@@ -356,7 +355,7 @@
         <p>Under Direction of Dr. Husnu Narman</p>
     </footer>
 
-    <div id="modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <!--<div id="modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -656,7 +655,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>-->
 
 </body>
 
