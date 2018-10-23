@@ -20,12 +20,16 @@
     function send_msg(){
         var socket = io();
         socket.emit('chat message', $('#txt_msg').val());  
-        var msg_template = '<div id="tb-testimonial" class="testimonial testimonial-default"><div class="testimonial-section">' + $('#txt_msg').val() + '</div><div class="testimonial-desc"><img src="https://placeholdit.imgix.net/~text?txtsize=9&txt=100%C3%97100&w=100&h=100" alt="" /><div class="testimonial-writer"><div class="testimonial-writer-name">Zahed Kamal</div><div class="testimonial-writer-designation">Front End Developer</div><a href="#" class="testimonial-writer-company">Touch Base Inc</a></div></div></div>';
+        return false;
+    }
+    
+    socket.on('chat message', function(msg){
+        var msg_template = '<div id="tb-testimonial" class="testimonial testimonial-default"><div class="testimonial-section">' + msg + '</div><div class="testimonial-desc"><img src="https://placeholdit.imgix.net/~text?txtsize=9&txt=100%C3%97100&w=100&h=100" alt="" /><div class="testimonial-writer"><div class="testimonial-writer-name">Zahed Kamal</div><div class="testimonial-writer-designation">Front End Developer</div><a href="#" class="testimonial-writer-company">Touch Base Inc</a></div></div></div>';
         $('#txt_msg').val('');
         messages += msg_template;
         $('#chat_messages').html(messages);
-        return false;
-    }
+        window.scrollTo(0, document.body.scrollHeight);
+    });
 
     /*$(document).ready(function() {
         $("#modal").modal('show');
