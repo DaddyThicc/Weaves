@@ -21,6 +21,7 @@ app.use(express.static(path.join(__dirname, 'assets')));
 var port = process.env.PORT || 3000;
 var home = "home.html";
 var CONNECTED_USERS = [];
+var unbacked_data = [];
 
 var connection = mysql.createConnection({
   host     : 'db4free.net',
@@ -55,17 +56,15 @@ app.get("/", function (req, res) {
 //checks login info then sends data to user and redirects to home page
 app.post("/login", function (req, res) {
     var query_string = `SELECT * FROM Users WHERE username = '${req.body.username}';`;
-    connection.connect();
     connection.query(query_string, function (error, results, fields) {
         if(results == null) return;
-        //else if(req.body.password != cryptr.decrypt(results[0]['password'])) return;
+        else if(req.body.password != decrypt(results[0]['password'])) return;
         else{
             var data = results[0];
             res.json({fname: data['fname'], lname: data['lname'], email: data['email'], username: data['username'], phone: data['phone'], origin: data['origin'], profile_pic: data['profile_pic'], friends: data['friends_list']});
             res.end();
         }
     });
-    connection.end();
 });
 
 // registers new user
@@ -73,16 +72,18 @@ app.post("/register", function (req, res) {
     console.log(req.body);
     var query_string = `INSERT INTO Users (fname, lname, email, username, password, phone, origin) VALUES ('${req.body.fname}', '${req.body.lname}', '${req.body.email}', '${req.body.username}', '${encrypt(req.body.password)}', '${req.body.phone}', '${req.body.origin}');`;
     
-    connection.connect();
     connection.query(query_string, function (error, results, fields) {
         if (error) throw error;
     });
-    connection.end();
 });
 
 io.on('connection', function (socket) {
-    socket.on('chat message', function (msg) {
-        io.emit('chat message', msg);
+    CONNECTED_USERS[socket.id] = socket;
+    CONNECTED_USERS[socket.id].on('direct message', function (data) {
+        unbacked_data[data.to]   += {from: data.from, to: data.to, timestamp: data.timestamp, message: data.message};
+        unbacked_data[data.from] += {from: data.from, to: data.to, timestamp: data.timestamp, message: data.message};
+        console.log(data);
+        io.emit('direct message', data);
     });
 });
 

@@ -10,38 +10,31 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    
-<script>
-    var messages = "";
-    var socket = io();
-    function send_msg(){
+
+    <script>
         var socket = io();
-        socket.emit('chat message', $('#txt_msg').val());  
-        return false;
-    }
-    
-    socket.on('chat message', function(msg){
-        var msg_template = '<div id="tb-testimonial" class="testimonial testimonial-default"><div class="testimonial-section">' + msg + '</div><div class="testimonial-desc"><img src="https://placeholdit.imgix.net/~text?txtsize=9&txt=100%C3%97100&w=100&h=100" alt="" /><div class="testimonial-writer"><div class="testimonial-writer-name">Zahed Kamal</div><div class="testimonial-writer-designation">Front End Developer</div><a href="#" class="testimonial-writer-company">Touch Base Inc</a></div></div></div>';
-        $('#txt_msg').val('');
-        messages += msg_template;
-        $('#chat_messages').html(messages);
-        window.scrollTo(0, document.body.scrollHeight);
-    });
+        var messages = "";
+        socket.on('direct message', function (data) {
+            var msg_template = '<div id="tb-testimonial" class="testimonial testimonial-default"><div class="testimonial-section">' + data.message + '</div><div class="testimonial-desc"><img src="https://placeholdit.imgix.net/~text?txtsize=9&txt=100%C3%97100&w=100&h=100" alt="" /><div class="testimonial-writer"><div class="testimonial-writer-name">Zahed Kamal</div><div class="testimonial-writer-designation">Front End Developer</div><a href="#" class="testimonial-writer-company">Touch Base Inc</a></div></div></div>';
+            $('#txt_msg').val('');
+            messages += msg_template;
+            $('#chat_messages').html(messages);
+            window.scrollTo(0, document.body.scrollHeight);
+        });
+        $(document).ready(function () {
+            $("#modal").modal('show');
+            $("body").toggleClass("dialogIsOpen");
+            $("#Modal-Login").show()
+            $("#Modal-Sign-Up").hide();
+            $("#Landing-Center").show().fadeIn("fast");
+            $("#Center-Selection").hide();
+        });
+        $("#logout-btn").on("click", function () {
+            $("#modal").modal('show');
+            $("body").toggleClass("dialogIsOpen");
+        });
 
-    $(document).ready(function() {
-        $("#modal").modal('show');
-        $("body").toggleClass("dialogIsOpen");
-        $("#Modal-Login").show()
-        $("#Modal-Sign-Up").hide();
-        $("#Landing-Center").show().fadeIn("fast");
-        $("#Center-Selection").hide();
-    });
-    $("#logout-btn").on("click", function () {
-        $("#modal").modal('show');
-        $("body").toggleClass("dialogIsOpen");
-    });
-
-</script>
+    </script>
 
 </head>
 
@@ -233,7 +226,7 @@
                     </div>
                     <div class="col-sm-2 sidenav">
                         <div class="group-list">
-                            <ul id="message_list" class="list-group">
+                            <ul id="message_list" class="list-group" style="margin-top: 19%;">
                                 <!--<li href="#" class="list-group-item title">
                                     Your Messages
                                 </li>
