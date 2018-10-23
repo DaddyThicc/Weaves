@@ -11,9 +11,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     
-
-
-
 <script>
     var messages = "";
     var socket = io();
@@ -31,7 +28,7 @@
         window.scrollTo(0, document.body.scrollHeight);
     });
 
-    /*$(document).ready(function() {
+    $(document).ready(function() {
         $("#modal").modal('show');
         $("body").toggleClass("dialogIsOpen");
         $("#Modal-Login").show()
@@ -42,7 +39,7 @@
     $("#logout-btn").on("click", function () {
         $("#modal").modal('show');
         $("body").toggleClass("dialogIsOpen");
-    });*/
+    });
 
 </script>
 
@@ -51,7 +48,7 @@
 <body>
     <div id="page-wrap">
         <div id="main" class="dialogIsOpen">
-            <nav class="navbar navbar-inverse">
+            <nav class="navbar navbar-inverse navbar-fixed-top">
                 <div class="container-fluid">
                     <div class="navbar-header">
                         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -82,16 +79,16 @@
                 </div>
             </nav>
 
-            <div class="container-fluid text-center blur greyscale" style="padding-left: 0px; padding-right: 0px;">
+            <div class="container-fluid text-center blur greyscale" style="padding-left: 0px; padding-right: 0px; height: 95%;">
                 <div class="">
                     <div class="col-sm-2 sidenav">
                         <p>
                             <meta name="viewport" content="width=device-width, initial-scale=1">
                         </p>
-                        <img id="profile_pic" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Missing_avatar.svg/425px-Missing_avatar.svg.png" alt="Avatar" class="avatar">
+                        <img id="profile_pic" style="margin-top: 15%;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Missing_avatar.svg/425px-Missing_avatar.svg.png" alt="Avatar" class="avatar">
                         <p> </p>
                         <div class="list-content">
-                            <ul class="connections_list" class="list-group">
+                            <ul id="connections_list" class="list-group">
                                 <!-- Close people around you -->
                             </ul>
                         </div>
@@ -101,7 +98,7 @@
                         <!-- Search form -->
                         <div class="row">
                             <div class="md-form search">
-                                <input class="form-control bar" type="text" placeholder="Search" aria-label="Search">
+                                <input style="margin-top: 5%;" class="form-control bar" type="text" placeholder="Search" aria-label="Search">
                             </div>
                         </div>
 
@@ -236,7 +233,7 @@
                     </div>
                     <div class="col-sm-2 sidenav">
                         <div class="group-list">
-                            <ul class="list-group">
+                            <ul id="message_list" class="list-group">
                                 <!--<li href="#" class="list-group-item title">
                                     Your Messages
                                 </li>
@@ -359,7 +356,7 @@
         <p>Under Direction of Dr. Husnu Narman</p>
     </footer>
 
-    <!--<div id="modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div id="modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -654,12 +651,12 @@
                                 <option value="Zambia">Zambia</option>
                                 <option value="Zimbabwe">Zimbabwe</option>
                             </select></div>
-                        <div class="form-group py-4"><button id="closeregister" class="btn btn-outline-secondary btn-lg" data-dismiss="modal" aria-hidden="true" onclick="CancelLogin()">Cancel</button><button id="signup" type="submit" class="btn btn-success btn-lg float-right" onclick="login()">Sign Up</button></div>
+                        <div class="form-group py-4"><button id="closeregister" class="btn btn-outline-secondary btn-lg" data-dismiss="modal" aria-hidden="true" onclick="CancelLogin()">Cancel</button><button id="signup" type="submit" class="btn btn-success btn-lg float-right" onclick="register()">Sign Up</button></div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>-->
+    </div>
 
 </body>
 

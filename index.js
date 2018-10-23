@@ -7,6 +7,8 @@ const path = require('path');
 var crypto = require('crypto'),
     algorithm = 'aes-256-ctr',
     password = 'd6F3Efeq';
+//var MongoClient = require('mongodb').MongoClient;
+var mysql      = require('mysql');
 
 // Setup
 app.use(bodyParser.json()); // support json encoded bodies
@@ -20,19 +22,26 @@ var port = process.env.PORT || 3000;
 var home = "home.html";
 var CONNECTED_USERS = [];
 
+var connection = mysql.createConnection({
+  host     : 'db4free.net',
+  user     : 'ehenry',
+  password : 'Paintball132!',
+  database : 'weaves'
+});
+
 // Encryption/Decryption
-function encrypt(text){
-  var cipher = crypto.createCipher(algorithm,password)
-  var crypted = cipher.update(text,'utf8','hex')
-  crypted += cipher.final('hex');
-  return crypted;
+function encrypt(text) {
+    var cipher = crypto.createCipher(algorithm, password)
+    var crypted = cipher.update(text, 'utf8', 'hex')
+    crypted += cipher.final('hex');
+    return crypted;
 }
- 
-function decrypt(text){
-  var decipher = crypto.createDecipher(algorithm,password)
-  var dec = decipher.update(text,'hex','utf8')
-  dec += decipher.final('utf8');
-  return dec;
+
+function decrypt(text) {
+    var decipher = crypto.createDecipher(algorithm, password)
+    var dec = decipher.update(text, 'hex', 'utf8')
+    dec += decipher.final('utf8');
+    return dec;
 }
 //////////////////////////
 
@@ -44,9 +53,8 @@ app.get("/", function (req, res) {
 });
 
 //checks login info then sends data to user and redirects to home page
-/*app.post("/home", function(req, res){
+app.post("/login", function (req, res) {
     var query_string = `SELECT * FROM Users WHERE username = '${req.body.username}';`;
-    console.log(req.body);
     connection.connect();
     connection.query(query_string, function (error, results, fields) {
         if(results == null) return;
@@ -54,7 +62,6 @@ app.get("/", function (req, res) {
         else{
             var data = results[0];
             res.json({fname: data['fname'], lname: data['lname'], email: data['email'], username: data['username'], phone: data['phone'], origin: data['origin'], profile_pic: data['profile_pic'], friends: data['friends_list']});
-            res.emit('OK!');
             res.end();
         }
     });
@@ -62,25 +69,23 @@ app.get("/", function (req, res) {
 });
 
 // registers new user
-app.post("/register", function(req, res) {
-    
-    var query_string = `INSERT INTO Users (fname, lname, email, username, password, phone, origin) VALUES ('${req.body.fname}', '${req.body.lname}', '${req.body.email}', '${req.body.username}', '${cryptr.encrypt(req.body.password)}', '${req.body.phone}', '${req.body.origin}');`;
+app.post("/register", function (req, res) {
+    console.log(req.body);
+    var query_string = `INSERT INTO Users (fname, lname, email, username, password, phone, origin) VALUES ('${req.body.fname}', '${req.body.lname}', '${req.body.email}', '${req.body.username}', '${encrypt(req.body.password)}', '${req.body.phone}', '${req.body.origin}');`;
     
     connection.connect();
     connection.query(query_string, function (error, results, fields) {
         if (error) throw error;
     });
     connection.end();
-    res.send('<meta http-equiv="Refresh" content="5; url=localhost:5000/pages/login.html>');
-    
-});*/
-
-io.on('connection', function(socket){
-  socket.on('chat message', function(msg){
-    io.emit('chat message', msg);
-  });
 });
 
-http.listen(port, function(){
-  console.log('listening on *:' + port);
+io.on('connection', function (socket) {
+    socket.on('chat message', function (msg) {
+        io.emit('chat message', msg);
+    });
+});
+
+http.listen(port, function () {
+    console.log('listening on *:' + port);
 });

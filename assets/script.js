@@ -1,11 +1,40 @@
+var GLOBAL_MESSAGES = [];
+
 function login() {
     $.ajax({
-        url: "/home",
+        url: "/login",
         type: 'POST',
         dataType: 'json', // added data type
         data: {
             username: $("#username").val(),
             password: $("#password").val()
+        },
+        success: function (data) {
+            $("#profile_pic").attr("src", data['profile_pic']);
+            console.log(data['friends']);
+            buildFriendsList(JSON.parse(data['friends']));
+            buildMessageList(JSON.parse(data['friends']));
+            $("body").toggleClass("dialogIsOpen");
+            $('#modal1').modal('hide');
+            return;
+        }
+    });
+}
+
+function register() {
+    $.ajax({
+        url: "/register",
+        type: 'POST',
+        dataType: 'json', // added data type
+        data: {
+            fname: $("#FirstName").val(),
+            lname: $("#LastName").val(),
+            email: $("#Email").val(),
+            username: $("#username").val(),
+            password: $("#password").val(),
+            phone: $("#phoneNumber").val(),
+            origin: $("#origin").val()
+            
         },
         success: function (data) {
             $("#profile_pic").attr("src", data['profile_pic']);
@@ -35,7 +64,7 @@ function buildMessageList(data) {
             conn = conn + '<li href="#" class="list-group-item text-left"><img class="img-thumbnail" src="' + data[i]['profile_pic'] + '"><label class="pull-right"><a class="btn btn-success btn-xs glyphicon glyphicon-envelope" href="#" title="View"></a></label><label class="nameMessage">' + data[i]['username'] + '</label><label class="message">Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br></label><div class="break"></div></li>';
         }
     }
-    $('#connections_list').html(conn);
+    $('#message_list').html(conn);
 }
 
 function openMessaging() {
