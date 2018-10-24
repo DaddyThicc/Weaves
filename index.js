@@ -71,7 +71,6 @@ app.post("/login", function (req, res) {
 app.post("/register", function (req, res) {
     console.log(req.body);
     var query_string = `INSERT INTO Users (fname, lname, email, username, password, phone, origin) VALUES ('${req.body.fname}', '${req.body.lname}', '${req.body.email}', '${req.body.username}', '${encrypt(req.body.password)}', '${req.body.phone}', '${req.body.origin}');`;
-    
     connection.query(query_string, function (error, results, fields) {
         if (error) throw error;
     });
@@ -80,9 +79,9 @@ app.post("/register", function (req, res) {
 io.on('connection', function (socket) {
     CONNECTED_USERS[socket.id] = socket;
     CONNECTED_USERS[socket.id].on('direct message', function (data) {
-        unbacked_data[data.to]   += {from: data.from, to: data.to, timestamp: data.timestamp, message: data.message};
-        unbacked_data[data.from] += {from: data.from, to: data.to, timestamp: data.timestamp, message: data.message};
-        console.log(data);
+        CONNECTED_USERS[socket.id].username = data.from;
+        unbacked_data[data.to]   += {from: data.from, to: data.to, timestamp: data.timestamp, message: data.message}+',';
+        unbacked_data[data.from] += {from: data.from, to: data.to, timestamp: data.timestamp, message: data.message}+',';
         io.emit('direct message', data);
     });
 });
