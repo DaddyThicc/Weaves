@@ -75,7 +75,10 @@ function send_msg(sendTo) {
         message: $('#txt_msg').val()
     };
     socket.emit('direct message', data);
-    return false;
+    var msg_template = '<div id="tb-testimonial" class="testimonial testimonial-default"><div class="testimonial-section">' + data.message + '</div><div class="testimonial-desc"><img src="https://placeholdit.imgix.net/~text?txtsize=9&txt=100%C3%97100&w=100&h=100" alt="" /><div class="testimonial-writer"><div class="testimonial-writer-name">'+ data.from +'</div><div class="testimonial-writer-designation">Front End Developer</div><a href="#" class="testimonial-writer-company">Touch Base Inc</a></div></div></div>';
+    $('#txt_msg').val('');
+    messages += msg_template;
+    $('#chat_messages').html(messages);
 }
 
 function openMessaging(sendTo) { // NOT COMPLETE
