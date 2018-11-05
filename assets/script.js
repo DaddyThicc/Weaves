@@ -15,11 +15,11 @@ function login() {
           personal_data = data;
           $("body").toggleClass("dialogIsOpen");
           $('#modal').modal('hide');
-            buildFriendsList(JSON.parse(data['friends']));
-            buildMessageList(JSON.parse(data['friends']));
-            $("#profile_pic").attr("src", data['profile_pic']);
-            connectTo(data['username']);
-            return;
+          buildFriendsList(JSON.parse(data['friends']));
+          buildMessageList(JSON.parse(data['friends']));
+          $("#profile_pic").attr("src", data['profile_pic']);
+          connectTo(data['username']);
+          return;
         }
     });
 }

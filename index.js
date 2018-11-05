@@ -150,12 +150,12 @@ io.on('connection', function (socket) {
     }
     socket.on('direct message', function (data) {
         if(CONNECTED_USERS[data.to] != null){
-          unbacked_data[data.to]   += {from: data.from, to: data.to, timestamp: data.timestamp, message: data.message, new: "no"}+',';
-          unbacked_data[data.from] += {from: data.from, to: data.to, timestamp: data.timestamp, message: data.message, new: "no"}+',';
+          unbacked_data[data.to].push({from: data.from, to: data.to, timestamp: data.timestamp, message: data.message, new: "no"});
+          unbacked_data[data.from].push({from: data.from, to: data.to, timestamp: data.timestamp, message: data.message, new: "no"});
           io.to(COONECTED_USERS[data.to]).emit('direct message', data);
         } else {
-          unbacked_data[data.to]   += ''+{from: data.from, to: data.to, timestamp: data.timestamp, message: data.message, new: "yes"}+''+',';
-          unbacked_data[data.from] += ''+{from: data.from, to: data.to, timestamp: data.timestamp, message: data.message, new: "no"}+''+',';
+          unbacked_data[data.to].push({from: data.from, to: data.to, timestamp: data.timestamp, message: data.message, new: "yes"});
+          unbacked_data[data.from].push({from: data.from, to: data.to, timestamp: data.timestamp, message: data.message, new: "no"});
         }
         console.log(unbacked_data);
     });
