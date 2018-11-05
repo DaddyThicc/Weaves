@@ -12,6 +12,7 @@ function login() {
             password: $("#password").val()
         },
         success: function (data) {
+          personal_data = data;
           $("body").toggleClass("dialogIsOpen");
           $('#modal').modal('hide');
             buildFriendsList(JSON.parse(data['friends']));
