@@ -1,5 +1,4 @@
 <html lang="en">
-
 <head>
     <title>Weaves</title>
     <meta charset="utf-8">
@@ -13,6 +12,10 @@
 
     <script>
         var socket = io();
+        function connectTo(username){
+          socket = io({ query: "username="+username });
+          return;
+        }
         var messages = "";
         socket.on('direct message', function (data) {
             var msg_template = '<div id="tb-testimonial" class="testimonial testimonial-default"><div class="testimonial-section">' + data.message + '</div><div class="testimonial-desc"><img src="https://placeholdit.imgix.net/~text?txtsize=9&txt=100%C3%97100&w=100&h=100" alt="" /><div class="testimonial-writer"><div class="testimonial-writer-name">Zahed Kamal</div><div class="testimonial-writer-designation">Front End Developer</div><a href="#" class="testimonial-writer-company">Touch Base Inc</a></div></div></div>';
@@ -33,7 +36,6 @@
             $("#modal").modal('show');
             $("body").toggleClass("dialogIsOpen");
         });
-
     </script>
 
 </head>
@@ -97,7 +99,7 @@
 
                         <div id="center-pane">
 
-                            <div id="chat_messages" class="row"></div>
+                            <!--<div id="chat_messages" class="row"></div>
 
                             <div class="row">
                                 <div class="input-group">
@@ -106,7 +108,7 @@
                                         <button id="m" class="btn btn-primary" onClick="send_msg()">Send</button>
                                     </div>
                                 </div>
-                            </div>
+                            </div>-->
 
 
                         </div>
@@ -377,10 +379,10 @@
                         <div class="form-group"><label>Email</label><input type="text" class="form-control form-control-lg" id="Email" required="" autocomplete="Enter-Email">
                             <div class="invalid-feedback"></div>
                         </div>
-                        <div class="form-group"><label for="uname1">Username</label><input type="text" class="form-control form-control-lg" name="uname1" id="username" required="">
+                        <div class="form-group"><label for="uname1">Username</label><input type="text" class="form-control form-control-lg" name="uname1" id="username2" required="">
                             <div class="invalid-feedback"></div>
                         </div>
-                        <div class="form-group"><label>Password</label><input type="password" class="form-control form-control-lg" id="password" required="" autocomplete="new-password">
+                        <div class="form-group"><label>Password</label><input type="password" class="form-control form-control-lg" id="password2" required="" autocomplete="new-password">
                             <div class="invalid-feedback"></div>
                         </div>
                         <div class="form-group"><label>Phone Number</label><input type="password" class="form-control form-control-lg" id="phoneNumber" required="" autocomplete="new-phone">

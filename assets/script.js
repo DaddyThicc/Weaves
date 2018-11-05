@@ -12,13 +12,12 @@ function login() {
             password: $("#password").val()
         },
         success: function (data) {
-            personal_data = data;
-            $("#profile_pic").attr("src", data['profile_pic']);
-            console.log(data['friends']);
             buildFriendsList(JSON.parse(data['friends']));
             buildMessageList(JSON.parse(data['friends']));
+            $("#profile_pic").attr("src", data['profile_pic']);
             $("body").toggleClass("dialogIsOpen");
             $('#modal').modal('hide');
+            connectTo(data['username']);
             return;
         }
     });
@@ -33,15 +32,12 @@ function register() {
             fname: $("#FirstName").val(),
             lname: $("#LastName").val(),
             email: $("#Email").val(),
-            username: $("#username").val(),
-            password: $("#password").val(),
+            username: $("#username2").val(),
+            password: $("#password2").val(),
             phone: $("#phoneNumber").val(),
             origin: $("#origin").val()
-
         },
         success: function (data) {
-            $("#profile_pic").attr("src", data['profile_pic']);
-            console.log(data['friends']);
             buildFriendsList(JSON.parse(data['friends']));
             buildMessageList(JSON.parse(data['friends']));
             $("body").toggleClass("dialogIsOpen");
@@ -82,22 +78,23 @@ function send_msg(sendTo) {
     return false;
 }
 
-function openMessaging(sendTo) {
-    var message_btn = '<div class="row"><form><div class="input-group"><input type="text" class="form-control" placeholder="Search" id="txtSearch" /><div class="input-group-btn"><button class="btn btn-primary" type="submit">Send</button></div></div></form></div>';
-    var message_box = '<div id="center-pane"></div>';
+function openMessaging(sendTo) { // NOT COMPLETE
+    var message_template = '<div id="chat_messages"></div><div class="row"><div class="input-group"><input type="text" class="form-control" placeholder="Search" id="txtSearch" /><div class="input-group-btn"><button class="btn btn-primary" onclick="send_msg(\'' + sendTo + '\')">Send</button></div></div></div>';
     var msgs = "";
-    
-    console.log(sendTo);
-    
+
+    $('#center-pane').html(message_template);
+
     for(var i = 0; i < Object.keys(GLOBAL_MESSAGES[sendTo]).length; i++){
         msgs += '<div id="tb-testimonial" class="testimonial testimonial-default"><div class="testimonial-section">' + data.message + '</div><div class="testimonial-desc"><img src="https://placeholdit.imgix.net/~text?txtsize=9&txt=100%C3%97100&w=100&h=100" alt="" /><div class="testimonial-writer"><div class="testimonial-writer-name"></div><div class="testimonial-writer-designation">Front End Developer</div><a href="#" class="testimonial-writer-company">Touch Base Inc</a></div></div></div>';
     }
+
+    $('#chat_messages').html(msgs);
+
 }
 
 
 
 // JQuery
-
 
 function newUser() {
     $("#Modal-Login").hide();
