@@ -82,7 +82,7 @@ function send_msg(sendTo) {
 }
 
 function openMessaging(sendTo) { // NOT COMPLETE
-    var message_template = '<div id="chat_messages"></div><div class="row"><div class="input-group"><input type="text" class="form-control" placeholder="Search" id="txtSearch" /><div class="input-group-btn"><button class="btn btn-primary" onclick="send_msg(\'' + sendTo + '\')">Send</button></div></div></div>';
+    var message_template = '<div id="chat_messages"></div><div class="row"><div class="input-group"><input type="text" class="form-control" placeholder="Send a message to '+ sendTo +'" id="txt_msg" /><div class="input-group-btn"><button class="btn btn-primary" onclick="send_msg(\'' + sendTo + '\')">Send</button></div></div></div>';
     var msgs = "";
 
     $('#center-pane').html(message_template);
