@@ -157,6 +157,7 @@ io.on('connection', function (socket) {
           unbacked_data[data.to]   += {from: data.from, to: data.to, timestamp: data.timestamp, message: data.message, new: "yes"}+',';
           unbacked_data[data.from] += {from: data.from, to: data.to, timestamp: data.timestamp, message: data.message, new: "no"}+',';
         }
+        console.log(unbacked_data[data.from]);
     });
 });
 
