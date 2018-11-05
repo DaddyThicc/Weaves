@@ -12,11 +12,11 @@ function login() {
             password: $("#password").val()
         },
         success: function (data) {
+          $("body").toggleClass("dialogIsOpen");
+          $('#modal').modal('hide');
             buildFriendsList(JSON.parse(data['friends']));
             buildMessageList(JSON.parse(data['friends']));
             $("#profile_pic").attr("src", data['profile_pic']);
-            $("body").toggleClass("dialogIsOpen");
-            $('#modal').modal('hide');
             connectTo(data['username']);
             return;
         }
@@ -75,7 +75,7 @@ function send_msg(sendTo) {
         message: $('#txt_msg').val()
     };
     socket.emit('direct message', data);
-    var msg_template = '<div id="tb-testimonial" class="testimonial testimonial-default"><div class="testimonial-section">' + data.message + '</div><div class="testimonial-desc"><img src="https://placeholdit.imgix.net/~text?txtsize=9&txt=100%C3%97100&w=100&h=100" alt="" /><div class="testimonial-writer"><div class="testimonial-writer-name">'+ data.from +'</div><div class="testimonial-writer-designation">Front End Developer</div><a href="#" class="testimonial-writer-company">Touch Base Inc</a></div></div></div>';
+    var msg_template = '<div id="tb-testimonial" class="testimonial testimonial-default"><div class="testimonial-section">' + data['message'] + '</div><div class="testimonial-desc"><img src="https://placeholdit.imgix.net/~text?txtsize=9&txt=100%C3%97100&w=100&h=100" alt="" /><div class="testimonial-writer"><div class="testimonial-writer-name">'+ data['from'] +'</div><div class="testimonial-writer-designation">Front End Developer</div><a href="#" class="testimonial-writer-company">Touch Base Inc</a></div></div></div>';
     $('#txt_msg').val('');
     messages += msg_template;
     $('#chat_messages').html(messages);

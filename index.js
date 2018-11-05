@@ -117,7 +117,6 @@ app.get("/", function (req, res) {
 app.post("/login", function (req, res) {
     var query_string = `SELECT * FROM Users WHERE username = '${req.body.username}';`;
     connection.query(query_string, function (error, results, fields) {
-        console.log('T: '+req.body.password+' D: '+decrypt(results[0]['password']))
         if(req.body.password == decrypt(results[0]['password'])){
             var data = results[0];
             res.json({fname: decrypt(data['fname']), lname: decrypt(data['lname']), email: decrypt(data['email']), username: data['username'], phone: decrypt(data['phone']), origin: data['origin'], profile_pic: data['profile_pic'], friends: data['friends_list']});
